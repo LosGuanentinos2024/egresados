@@ -30,8 +30,8 @@
 .boton {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #C1D4F3;
-    color: #fff;
+    background-color: #90C0E6;
+    color: #000000;
     text-decoration: none; /* Esto quita el subrayado que suele haber en los enlaces */
     border: none;
     border-radius: 5px;

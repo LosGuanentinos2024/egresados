@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerdos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #001aff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #90C0E6;
+            color: #000000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #90C0E6;
+        }
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-container .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #90C0E6;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recuerdos</h1>
+    </header>
+    <div class="container">
+        <h2>Subir una imagen</h2>
+        <form id="uploadForm" enctype="multipart/form-data" method="post" action="#">
+            <label for="file">Selecciona una imagen:</label>
+            <input type="file" id="file" name="file" accept="image/*" required>
+            <input type="submit" value="Subir imagen">
+        </form>
+        
+        <h2>Galería de imágenes</h2>
+        <div id="gallery"></div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const gallery = document.getElementById('gallery');
+
+        uploadForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(uploadForm);
+            const fileInput = document.getElementById('file');
+            const files = fileInput.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                formData.append('files[]', file);
+                displayImage(file);
+            }
+
+            // Aquí puedes agregar código para enviar la imagen al servidor
+            // y manejar la lógica de almacenamiento y procesamiento
+            
+            uploadForm.reset();
+        });
+
+        function displayImage(file) {
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('image-container');
+
+                const img = document.createElement('img');
+                img.src = event.target.result;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.innerText = 'Eliminar';
+                deleteButton.addEventListener('click', function() {
+                    imageContainer.remove();
+                    // Aquí puedes agregar código para eliminar la imagen del servidor
+                    // y manejar la lógica de eliminación
+                });
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(deleteButton);
+                gallery.appendChild(imageContainer);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
