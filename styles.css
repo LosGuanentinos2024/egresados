@@ -25,6 +25,19 @@
     margin: 15px
 }
 
+/* Ejemplo */
+
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #C1D4F3;
+    color: #fff;
+    text-decoration: none; /* Esto quita el subrayado que suele haber en los enlaces */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .menu-superior ul {
     list-style-type: none;
     text-align: center;
